@@ -1,0 +1,2 @@
+rootProject.name = "Java Rate Limiter"
+include "ratelimit-service", "grpc-server", "data-plane-api"
