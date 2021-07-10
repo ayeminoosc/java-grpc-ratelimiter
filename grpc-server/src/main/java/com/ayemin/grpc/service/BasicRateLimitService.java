@@ -7,7 +7,6 @@ public class BasicRateLimitService extends RateLimitServiceGrpc.RateLimitService
     @Override
     public void shouldRateLimit(io.envoyproxy.envoy.service.ratelimit.v3.RateLimitRequest request,
                                 io.grpc.stub.StreamObserver<io.envoyproxy.envoy.service.ratelimit.v3.RateLimitResponse> responseObserver) {
-//        io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getShouldRateLimitMethod(), responseObserver);
         System.out.println("hitting ratelimiter");
         RateLimitResponse response = RateLimitResponse.newBuilder()
                 .setOverallCode(RateLimitResponse.Code.OVER_LIMIT)
