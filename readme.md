@@ -51,7 +51,7 @@ decision is then returned to the caller.
 ## Envoy Proxy Rate-Limit Proto Version
 v3 of ratelimit protocol [v3 rls.proto](https://github.com/envoyproxy/data-plane-api/blob/master/envoy/service/ratelimit/v3/rls.proto) is currently used to communicate with envoy proxy.
 
-#Building Using Docker Only
+# Building Using Docker Only
 * Install [docker](https://www.docker.com/products/docker-desktop) if it is not installed before in your machine.
 
 * The docker-compose setup has four containers: redis, ratelimit-build-and-run, envoy-proxy and envoy-mock. In order to run the docker-compose setup from the root of the repo, run
@@ -67,7 +67,7 @@ Note: while this approach is easiest to setup and run the project, building proj
 
 ---
 
-#Building Using Docker + Gradle
+# Building Using Docker + Gradle
 * Install [docker](https://www.docker.com/products/docker-desktop) if it is not installed before in your machine.
 * Install [openJdk-15+](https://openjdk.java.net/) if it not installed before
 
