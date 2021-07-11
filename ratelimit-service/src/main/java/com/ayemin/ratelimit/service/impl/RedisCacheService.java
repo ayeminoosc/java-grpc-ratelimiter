@@ -1,7 +1,6 @@
 package com.ayemin.ratelimit.service.impl;
 
 import com.ayemin.ratelimit.service.CacheService;
-import org.redisson.Redisson;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RedissonClient;
 
@@ -15,10 +14,10 @@ public class RedisCacheService implements CacheService {
     }
 
     @Override
-    public int increase(String key) {
-         RAtomicLong atomicLong = client.getAtomicLong("someting");
-         atomicLong.incrementAndGet();
-         atomicLong.expireAsync(1, TimeUnit.MINUTES);
-        return 0;
+    public long increase(String key) {
+        RAtomicLong atomicLong = client.getAtomicLong(key);
+        atomicLong.expireAsync(1, TimeUnit.MINUTES);
+        return atomicLong.incrementAndGet();
+
     }
 }

@@ -8,6 +8,7 @@ import org.redisson.config.Config;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -41,7 +42,7 @@ public class RateLimitServiceBuilder {
         }
 
         if(Objects.isNull(properties)){
-            withProperties(Paths.get("src/main/resources/applications.properties"));
+            withProperties(this.getClass().getClassLoader().getResource("application.properties"));
         }
 
         if(Objects.isNull(descriptorCacheService)){
@@ -49,7 +50,7 @@ public class RateLimitServiceBuilder {
         }
 
         if(Objects.isNull(cacheService)){
-            withRedis(Paths.get("src/main/resources/reddison.yml"));
+            withRedis(this.getClass().getClassLoader().getResource("redisson.yml"));
         }
 
         if(Objects.isNull(algorithm)){
@@ -69,6 +70,14 @@ public class RateLimitServiceBuilder {
     public RateLimitServiceBuilder withProperties(Path path) throws IOException {
         this.properties = new Properties();
         try(InputStream in = new FileInputStream(path.toFile())){
+            properties.load(in);
+        }
+        return this;
+    }
+
+    public RateLimitServiceBuilder withProperties(URL path) throws IOException {
+        this.properties = new Properties();
+        try(InputStream in = path.openStream()){
             properties.load(in);
         }
         return this;
@@ -106,6 +115,15 @@ public class RateLimitServiceBuilder {
 
     public RateLimitServiceBuilder withRedis(Path configPath) throws IOException {
         Config config = Config.fromYAML(configPath.toFile());
+        return withRedis(config);
+    }
+
+    public RateLimitServiceBuilder withRedis(URL configPath) throws IOException {
+        Config config = Config.fromYAML(configPath);
+        return withRedis(config);
+    }
+
+    public RateLimitServiceBuilder withRedis(Config config){
         RedissonClient client = Redisson.create(config);
         this.cacheService = new RedisCacheService(client);
         return this;

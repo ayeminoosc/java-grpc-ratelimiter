@@ -32,10 +32,14 @@ public class FixWindowRateLimitService implements RateLimitService {
 
             rateLimit.ifPresent(rl -> {
                 long currentUnitKey = getCurrentWindowKey(rl.getUnit());
-                int totalCount = cacheService.increase(root.getDomain() + "-" + cacheKey + "_" + currentUnitKey);
+                long totalCount = cacheService.increase(root.getDomain() + "-" + cacheKey + "_" + currentUnitKey);
                 if (totalCount > rl.getRequestPerUnit()) {
                     isAllow.set(false);
                 }
+                System.out.println("currentUnitKey " + currentUnitKey);
+                System.out.println("totalCount " + totalCount);
+                System.out.println("allowed count "+ rl.getRequestPerUnit());
+                System.out.println("allowed "+ (totalCount > rl.getRequestPerUnit()));
             });
 
         }

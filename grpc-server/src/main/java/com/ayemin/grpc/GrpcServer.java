@@ -11,7 +11,7 @@ public class GrpcServer {
         Server server = ServerBuilder
           .forPort(8082)
           .addService(new BasicRateLimitService()).build();
-        System.out.println("working fine");
+        System.out.println("started Grpc Server");
         server.start();
         server.awaitTermination();
     }

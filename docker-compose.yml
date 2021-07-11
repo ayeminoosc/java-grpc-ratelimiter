@@ -9,37 +9,20 @@ services:
     networks:
       - java-ratelimit-network
 
-  # minimal container that builds the ratelimit service binary and exits.
-#  ratelimit-build:
-#    image: golang:1.14-alpine
-#    working_dir: /go/src/github.com/envoyproxy/ratelimit
-#    command: go build -o /usr/local/bin/ratelimit ./src/service_cmd/main.go
+#  java-ratelimit:
+#    image: openjdk:8u292-jre-slim
+#    working_dir: /opt/ratelimit/
+#    command: java -jar /opt/ratelimit/grpc-server-all.jar
+#    expose:
+#      - "8082"
+#    ports:
+#      - 8082:8082
+#    depends_on:
+#      - redis
+#    networks:
+#      - java-ratelimit-network
 #    volumes:
-#      - .:/go/src/github.com/envoyproxy/ratelimit
-#      - binary:/usr/local/bin/
-#
-#  ratelimit-client-build:
-#    image: golang:1.14-alpine
-#    working_dir: /go/src/github.com/envoyproxy/ratelimit
-#    command: go build -o /usr/local/bin/ratelimit_client ./src/client_cmd/main.go
-#    volumes:
-#      - .:/go/src/github.com/envoyproxy/ratelimit
-#      - binary:/usr/local/bin/
-#
-  java-ratelimit:
-    image: openjdk:8u292-jre-slim
-    working_dir: /opt/ratelimit/
-    command: java -jar /opt/ratelimit/grpc-server-all.jar
-    expose:
-      - "8082"
-    ports:
-      - 8082:8082
-    depends_on:
-      - redis
-    networks:
-      - java-ratelimit-network
-    volumes:
-      - ./grpc-server/build/libs:/opt/ratelimit/
+#      - ./grpc-server/build/libs:/opt/ratelimit/
 
   envoy-proxy:
     image: envoyproxy/envoy:v1.18-latest

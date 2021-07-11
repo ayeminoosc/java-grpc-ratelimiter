@@ -6,5 +6,5 @@ public interface CacheService {
      * @param key
      * @return
      */
-    int increase(String key);
+    long increase(String key);
 }

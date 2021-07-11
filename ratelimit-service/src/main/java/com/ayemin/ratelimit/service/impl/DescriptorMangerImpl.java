@@ -20,6 +20,7 @@ public class DescriptorMangerImpl implements DescriptorManager {
         this.descriptorLoader = descriptorLoader;
         this.properties = properties;
         this.descriptorCacheService = descriptorCacheService;
+        reload();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class DescriptorMangerImpl implements DescriptorManager {
     @Override
     public Optional<RateLimit> findNearestMatch(String domain, Descriptor descriptor) {
         StringBuffer buffer = new StringBuffer();
-        Descriptor child = new Descriptor();
+        Descriptor child = descriptor;
         while(child.getDescriptors()!=null && child.getDescriptors().size()> 0){
             if(child.getDescriptors().size()>1){
                 throw new IllegalArgumentException("only one child allowed in each descriptor");
