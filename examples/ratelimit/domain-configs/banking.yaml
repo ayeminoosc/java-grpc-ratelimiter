@@ -1,0 +1,58 @@
+---
+domain: banking
+descriptors:
+  - key: source_cluster
+    value: proxy
+    descriptors:
+      - key: destination_cluster
+        value: mock
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 5
+
+  - key: org
+    value: rhovg
+    rateLimit:
+      unit: MINUTE
+      requestPerUnit: 20
+    descriptors:
+      - key: user
+        value: tester1
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 5
+      - key: user
+        value: tester2
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 10
+
+  - key: org
+    value: mycomp
+    descriptors:
+      - key: user
+        value: tester1
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 10
+      - key: user
+        value: tester2
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 5
+
+  - key: org
+    rateLimit:
+      unit: MINUTE
+      requestPerUnit: 100
+
+  - key: user
+    rateLimit:
+      unit: MINUTE
+      requestPerUnit: 3
+
+  - key: user
+    value: ban_user
+    rateLimit:
+      unit: MINUTE
+      requestPerUnit: 0

@@ -1,0 +1,29 @@
+---
+domain: rl
+descriptors:
+  - key: source_cluster
+    value: proxy
+    descriptors:
+      - key: destination_cluster
+        value: mock
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 1
+  - key: foo
+    rateLimit:
+      unit: MINUTE
+      requestPerUnit: 2
+    descriptors:
+      - key: bar
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 3
+      - key: bar
+        value: banned
+        rateLimit:
+          unit: MINUTE
+          requestPerUnit: 0
+      - key: baz
+        rateLimit:
+          unit: SECOND
+          requestPerUnit: 1

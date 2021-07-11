@@ -99,7 +99,7 @@ static_resources:
                   - name: envoy.filters.http.ratelimit
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
-                      domain: rl
+                      domain: banking
                       request_type: external
                       stage: 0
                       rate_limited_as_resource_exhausted: true
@@ -127,14 +127,14 @@ static_resources:
                                   - source_cluster: {} # This action's value is populated by the "service-cluster" arg passed in when starting Envoy. In this example, it's "proxy" (see docker-compose-example.yml)
                                   - destination_cluster: {} # This action's value is populated by the value set in the above egress "cluster" field -- "mock"
                         - match:
-                            prefix: /header
+                            prefix: /oneheader
                           route:
                             cluster: mock
                             rate_limits:
                               - actions:
                                   - request_headers:
-                                      header_name: "foo"
-                                      descriptor_key: "foo"
+                                      header_name: "user"
+                                      descriptor_key: "user"
                         - match:
                             prefix: /twoheader
                           route:
@@ -142,15 +142,12 @@ static_resources:
                             rate_limits:
                               - actions:
                                   - request_headers:
-                                      header_name: "foo"
-                                      descriptor_key: "foo"
+                                      header_name: "org"
+                                      descriptor_key: "org"
                                   - request_headers:
-                                      header_name: "bar"
-                                      descriptor_key: "bar"
+                                      header_name: "user"
+                                      descriptor_key: "user"
                               - actions:
                                   - request_headers:
-                                      header_name: "foo"
-                                      descriptor_key: "foo"
-                                  - request_headers:
-                                      header_name: "baz"
-                                      descriptor_key: "baz"
+                                      header_name: "org"
+                                      descriptor_key: "org"

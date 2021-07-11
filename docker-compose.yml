@@ -9,20 +9,20 @@ services:
     networks:
       - java-ratelimit-network
 
-#  java-ratelimit:
-#    image: openjdk:8u292-jre-slim
-#    working_dir: /opt/ratelimit/
-#    command: java -jar /opt/ratelimit/grpc-server-all.jar
-#    expose:
-#      - "8082"
-#    ports:
-#      - 8082:8082
-#    depends_on:
-#      - redis
-#    networks:
-#      - java-ratelimit-network
-#    volumes:
-#      - ./grpc-server/build/libs:/opt/ratelimit/
+  ratelimit-build-and-run:
+    image: gradle:7.1.1-jdk16-hotspot
+    working_dir: /opt/workspace/
+    command: /bin/bash build_and_run.sh
+    expose:
+      - "8082"
+    ports:
+      - 8082:8082
+    depends_on:
+      - redis
+    networks:
+      - java-ratelimit-network
+    volumes:
+      - .:/opt/workspace/
 
   envoy-proxy:
     image: envoyproxy/envoy:v1.18-latest

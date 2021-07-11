@@ -22,7 +22,7 @@ public class YamlDescriptorLoader implements DescriptorLoader {
     @Override
     public List<Root> loadConfig(Properties properties){
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-
+        System.out.println(Paths.get(properties.getProperty(DOMAIN_CONFIG_FOLDER_PATH, "src/main/resources/domain-configs/")).toAbsolutePath());
         try (Stream<Path> paths = Files.walk(Paths.get(properties.getProperty(DOMAIN_CONFIG_FOLDER_PATH, "src/main/resources/domain-configs/")))) {
             return paths.filter(Files::isRegularFile)
                     .filter(p->{String ps = p.toString(); return ps.endsWith(".yaml") || ps.endsWith(".yml");})

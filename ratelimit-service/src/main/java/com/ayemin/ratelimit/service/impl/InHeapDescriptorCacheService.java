@@ -31,6 +31,8 @@ public class InHeapDescriptorCacheService implements DescriptorCacheService {
 
     @Override
     public RateLimit getRateLimit(String domain, String descriptorCacheKey) {
+        System.out.println("domain " + domain);
+        System.out.println("descriptorCacheKey "+ descriptorCacheKey);
         if(mapOfRateLimit.containsKey(domain)) return mapOfRateLimit.get(domain).get(descriptorCacheKey);
         return null;
     }
